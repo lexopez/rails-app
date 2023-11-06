@@ -11,6 +11,17 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div class="container-fluid">
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+      <% if user_signed_in? %>
+        <%= link_to "sign out", destroy_user_session_path, method: :delete %>
+        <%= link_to "edit profile", edit_user_registration_path %>
+      <%else%>
+        <%= link_to "sign up", new_user_registration_path %>/
+        <%= link_to "sign in", user_session_path %>
+      <%end%>
+      <%= yield %>
+    </div>
   </body>
 </html>

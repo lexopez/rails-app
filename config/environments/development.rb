@@ -17,6 +17,19 @@ Rails.application.configure do
   # Enable server timing
   config.server_timing = true
 
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address:         'smtp.gmail.com',
+    port:            587,
+    domain:          'localhost',
+    user_name:       Rails.application.credentials.dig(:google_smtp, :email),
+    password:        Rails.application.credentials.dig(:google_smtp, :password),
+    authentication:  'plain',
+    enable_starttls: true,
+    open_timeout:    5,
+    read_timeout:    5 }
+
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
   if Rails.root.join("tmp/caching-dev.txt").exist?
@@ -67,4 +80,6 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 end
