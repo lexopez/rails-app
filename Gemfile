@@ -75,3 +75,13 @@ group :test do
 end
 
 gem "devise", "~> 4.9"
+
+gem "phonelib", "~> 0.8.5"
+
+gem "vonage", "~> 7.18"
+
+gem "omniauth-rails_csrf_protection", "~> 1.0"
+
+gem "omniauth-google-oauth2", "~> 1.1"
+
+gem "omniauth-github", "~> 2.0"
