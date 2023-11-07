@@ -1,10 +1,11 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_post, only: %i[ show edit update destroy ]
+  # before_action :authorization, except: %i[index, show]
 
   # GET /posts or /posts.json
   def index
-    @posts = Post.all
+    @posts = policy_scope(Post).all
     console
   end
 
@@ -24,7 +25,7 @@ class PostsController < ApplicationController
   # POST /posts or /posts.json
   def create
     @post = Post.new(post_params)
-
+    authorize @post, policy_class: PostPolicy
     respond_to do |format|
       if @post.save
         format.html { redirect_to post_url(@post), notice: "Post was successfully created." }
@@ -38,6 +39,7 @@ class PostsController < ApplicationController
 
   # PATCH/PUT /posts/1 or /posts/1.json
   def update
+    authorize @post, policy_class: PostPolicy
     respond_to do |format|
       if @post.update(post_params)
         format.html { redirect_to post_url(@post), notice: "Post was successfully updated." }
@@ -69,4 +71,8 @@ class PostsController < ApplicationController
     def post_params
       params.require(:post).permit(:title, :body)
     end
+
+    # def authorization
+    #   authorize @post, policy_class: PostPolicy
+    # end
 end
